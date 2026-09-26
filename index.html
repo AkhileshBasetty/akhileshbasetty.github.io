@@ -53,6 +53,17 @@
 
   /* Hero */
   header.hero { padding: 72px 0 48px; }
+  .hero-top { display: flex; gap: 40px; align-items: flex-start; justify-content: space-between; }
+  .hero-text { flex: 1 1 420px; min-width: 0; }
+  .hero-photo {
+    flex: 0 0 200px;
+    width: 200px;
+    height: auto;
+    border-radius: 16px;
+    border: 1px solid var(--rule);
+    object-fit: cover;
+    display: block;
+  }
   .hero h1 {
     font-size: clamp(44px, 8vw, 84px);
     line-height: 0.95;
@@ -168,6 +179,35 @@
   .more-item .when { color: var(--ink-soft); font-size: 14px; margin: 0 0 8px; }
   .more-item p { margin: 0; font-size: 16px; }
 
+  /* Photo gallery: outside of it all */
+  section.gallery { padding: 56px 0; border-top: 1px solid var(--rule); }
+  section.gallery h2 { font-size: 28px; letter-spacing: -0.02em; margin: 0 0 4px; }
+  section.gallery .sub { color: var(--ink-soft); margin: 0 0 24px; max-width: var(--measure); }
+  .filmstrip {
+    display: flex;
+    gap: 22px;
+    overflow-x: auto;
+    padding: 10px 4px 20px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+  .filmstrip img {
+    flex: 0 0 auto;
+    height: 320px;
+    width: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    scroll-snap-align: start;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .filmstrip img:nth-child(odd) { transform: rotate(-1.5deg); }
+  .filmstrip img:nth-child(even) { transform: rotate(1.5deg); }
+  .filmstrip img:hover { transform: rotate(0deg) scale(1.02); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+  .filmstrip::-webkit-scrollbar { height: 8px; }
+  .filmstrip::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 4px; }
+
   section.foot { padding: 56px 0 72px; border-top: 1px solid var(--rule); }
   .foot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px 48px; }
   .foot-grid h3 { font-size: 16px; margin: 0 0 6px; }
@@ -175,6 +215,8 @@
   footer { padding: 0 0 48px; color: var(--ink-soft); font-size: 14px; }
 
   @media (max-width: 820px) {
+    .hero-top { flex-wrap: wrap; }
+    .hero-photo { flex: 0 0 140px; width: 140px; order: -1; }
     .case-grid { grid-template-columns: 1fr; gap: 20px; }
     ol.flow { flex-direction: column; gap: 22px; }
     ol.flow li + li::before { left: 24px; top: -20px; width: 2px; height: 16px; }
@@ -191,24 +233,26 @@
     .pillars a, .pillars a + a { padding: 14px 0; border-left: 0; }
     .pillars a + a { border-top: 1px solid var(--rule); }
     figure.system { padding: 16px 14px 14px; }
+    .filmstrip img { height: 230px; }
   }
 </style>
 </head>
 <body>
 
 <header class="hero">
-  <div class="wrap">
-    <h1>Akhilesh Basetty</h1>
-    <p class="pitch">Applied ML engineer who ships models into products people use.</p>
-    <p class="sub">Computer Science at UCLA, class of 2028. This summer I built LLM pattern mining and retrieval for Adobe's journey-generation agent. During the year I train and deploy transformer policies on bimanual ALOHA robot arms in UCLA's Kao Lab, and I lead a team building software for LA nonprofits.</p>
-    <nav class="links" aria-label="Contact and profiles">
-      <a href="mailto:akhilesh.basetty@gmail.com">akhilesh.basetty@gmail.com</a>
-      <a href="resume.pdf">Resume (PDF)</a>
-      <a href="https://github.com/AkhileshBasetty">GitHub</a>
-      <!-- TODO: uncomment and add your LinkedIn URL
-      <a href="https://www.linkedin.com/in/REPLACE_ME">LinkedIn</a>
-      -->
-    </nav>
+  <div class="wrap hero-top">
+    <div class="hero-text">
+      <h1>Akhilesh Basetty</h1>
+      <p class="pitch">Applied ML engineer who ships models into products people use.</p>
+      <p class="sub">Computer Science at UCLA, class of 2028. This summer I built LLM pattern mining and retrieval for Adobe's journey-generation agent. During the year I train and deploy transformer policies on bimanual ALOHA robot arms in UCLA's Kao Lab, and I lead a team building software for LA nonprofits.</p>
+      <nav class="links" aria-label="Contact and profiles">
+        <a href="mailto:akhilesh.basetty@gmail.com">akhilesh.basetty@gmail.com</a>
+        <a href="resume.pdf">Resume (PDF)</a>
+        <a href="https://github.com/AkhileshBasetty">GitHub</a>
+        <a href="https://www.linkedin.com/in/akhilesh-basetty-834414269/">LinkedIn</a>
+      </nav>
+    </div>
+    <img class="hero-photo" src="images/headshot.jpg" alt="Akhilesh Basetty" width="200" height="300">
   </div>
 </header>
 
@@ -385,6 +429,20 @@
         <h3>Tools</h3>
         <p>Python, C++, Java, JavaScript, Bash. PyTorch, TensorFlow, OpenCV, ROS 2, MuJoCo. React, Node.js, Flask, Firebase, MongoDB, SQLite, AWS S3 and EC2, Databricks.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" aria-labelledby="gallery-h">
+  <div class="wrap">
+    <h2 id="gallery-h">Outside of it all</h2>
+    <p class="sub">Thrifting in Seoul, palace hopping, and eating my way through Korea.</p>
+    <div class="filmstrip">
+      <img src="images/candid-1.jpg" alt="Thrifting with a friend in Seoul" loading="lazy">
+      <img src="images/candid-2.jpg" alt="Standing in front of Gyeongbokgung Palace, Seoul" loading="lazy">
+      <img src="images/candid-3.jpg" alt="Visiting a temple in Gyeongju" loading="lazy">
+      <img src="images/candid-4.jpg" alt="Dinner with a friend at a Korean BBQ restaurant" loading="lazy">
+      <img src="images/candid-5.jpg" alt="Out with friends at a restaurant" loading="lazy">
     </div>
   </div>
 </section>
